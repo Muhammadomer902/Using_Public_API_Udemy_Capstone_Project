@@ -18,4 +18,4 @@ For more Projects of the Course Visit :-https://github.com/Muhammadomer902/Udemy
 
 To visit the live website click:-https://cocktail-search.onrender.com
 
-It might be live or paused
+It might be live or suspended
