@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400&display=swap" rel="stylesheet">
+    <title>Find Your Cocktail</title>
+</head>
+<body>
+    <h1>Cocktail Search</h1>
+    
+    <form action="/" id="selectedform" method="post">
+        <select name="type" id="type-select">
+            <option value="" disabled selected>Search Cocktail By</option>
+            <option value="name" <% if (choice === 'name') { %> selected <% } %>>Name</option>
+            <option value="id" <% if (choice === 'id') { %> selected <% } %>>ID</option>
+            <option value="alphabet" <% if (choice === 'alphabet') { %> selected <% } %>>Alphabet</option>
+            <option value="random" <% if (choice === 'random') { %> selected <% } %>>Random</option>
+        </select>
+    </form>
+
+    <div id="form-container">
+        <% if (choice) { %>
+            <h2 style="margin-top: 20px;">You selected: <%= choice.charAt(0).toUpperCase() + choice.slice(1) %></h2>
+
+            <% if (choice === "name") { %>
+                <form action="/search" method="post" style="margin-top: 10px;">
+                    <label for="cocktail-name">Enter Cocktail Name:</label>
+                    <input type="text" id="cocktail-name" name="cocktailName" placeholder="e.g., Margarita">
+                    <button type="submit">Search by Name</button>
+                </form>
+
+
+                <% if (result && result.length > 0) { %>
+                    <h3>Cocktail Results</h3>
+                    <% result.forEach(drink => { %>
+                        <div style="margin-top: 20px;">
+                            <p>
+                                <strong>Cocktail ID:</strong> <%= drink.idDrink %><br>
+                                <strong>Cocktail Name:</strong> <%= drink.strDrink %><br>
+                                <strong>Cocktail Category:</strong> <%= drink.strCategory %><br>
+                            </p>
+                            <img src="<%= drink.strDrinkThumb %>" alt="Cocktail Image" style="max-width: 300px;">
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p>No cocktails found for the selected search criteria.</p>
+                <% } %>
+
+            <% } else if (choice === "id") { %>
+                <form action="/search" method="post" style="margin-top: 10px;">
+                    <label for="cocktail-id">Enter Cocktail ID:</label>
+                    <input type="text" id="cocktail-id" name="cocktailId" placeholder="e.g., 11007">
+                    <button type="submit">Search by ID</button>
+                </form>
+
+
+                <% if (result && result.length > 0) { %>
+                    <h3>Cocktail Results</h3>
+                    <% result.forEach(drink => { %>
+                        <div style="margin-top: 20px;">
+                            <p>
+                                <strong>Cocktail ID:</strong> <%= drink.idDrink %><br>
+                                <strong>Cocktail Name:</strong> <%= drink.strDrink %><br>
+                                <strong>Cocktail Category:</strong> <%= drink.strCategory %><br>
+                            </p>
+                            <img src="<%= drink.strDrinkThumb %>" alt="Cocktail Image" style="max-width: 300px;">
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p>No cocktails found for the selected search criteria.</p>
+                <% } %>
+
+            <% } else if (choice === "alphabet") { %>
+                <form action="/search" method="post" style="margin-top: 10px;">
+                    <label for="cocktail-alphabet">Enter Alphabet:</label>
+                    <input type="text" id="cocktail-alphabet" name="cocktailAlphabet" maxlength="1" placeholder="e.g., A">
+                    <button type="submit">Search by Alphabet</button>
+                </form>
+
+
+                <% if (result && result.length > 0) { %>
+                    <h3>Cocktail Results</h3>
+                    <% result.forEach(drink => { %>
+                        <div style="margin-top: 20px;">
+                            <p>
+                                <strong>Cocktail ID:</strong> <%= drink.idDrink %><br>
+                                <strong>Cocktail Name:</strong> <%= drink.strDrink %><br>
+                                <strong>Cocktail Category:</strong> <%= drink.strCategory %><br>
+                            </p>
+                            <img src="<%= drink.strDrinkThumb %>" alt="Cocktail Image" style="max-width: 300px;">
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p>No cocktails found for the selected search criteria.</p>
+                <% } %>
+
+            <% } else if (choice === "random" || result) { %>
+                <% if (result) { %>
+                    <h3>Cocktail Details</h3>
+                    <p>
+                        <strong>Cocktail ID:</strong> <%= result.idDrink %><br>
+                        <strong>Cocktail Name:</strong> <%= result.strDrink %><br>
+                        <strong>Cocktail Category:</strong> <%= result.strCategory %><br>
+                        <img src="<%= result.strDrinkThumb %>" alt="Cocktail Image" style="max-width: 300px;">
+                    </p>
+                <% } else { %>
+                    <p>No cocktails found for the selected search criteria.</p>
+                <% } %>
+            <% } %>
+        <% } %>
+    </div>
+
+    <script>
+        document.getElementById('type-select').addEventListener('change', function() {
+            document.getElementById('selectedform').submit(); // Submit form on dropdown selection
+        });
+    </script>
+</body>
+</html>
